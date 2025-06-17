@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, MapPin, Droplets, Wind, Gauge } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import WeatherIcon from './WeatherIcon';
 import WeatherBackground from './WeatherBackground';
+import TemperatureTrendChart from './TemperatureTrendChart';
 
 interface WeatherData {
   name: string;
@@ -134,7 +134,7 @@ const WeatherApp = () => {
       <WeatherBackground weatherCode={weather?.weatherCode} isNight={isNight} />
       
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
-        <div className="w-full max-w-md space-y-6">
+        <div className="w-full max-w-4xl space-y-6">
           {/* Search Section */}
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-white drop-shadow-lg">
@@ -185,51 +185,57 @@ const WeatherApp = () => {
 
           {/* Weather Display */}
           {weather && (
-            <Card className="backdrop-blur-md bg-white/10 border-white/20 shadow-2xl animate-fade-in">
-              <CardContent className="p-6 space-y-6">
-                {/* Location */}
-                <div className="text-center">
-                  <div className="flex items-center justify-center space-x-2 text-white">
-                    <MapPin className="h-5 w-5" />
-                    <span className="text-xl font-semibold">
-                      {weather.name}, {weather.country}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Temperature and Icon */}
-                <div className="text-center space-y-4">
-                  <WeatherIcon weatherCode={weather.weatherCode} size={80} />
-                  <div className="space-y-2">
-                    <div className="text-5xl font-bold text-white animate-scale-in">
-                      {convertTemperature(weather.temperature)}°{isCelsius ? 'C' : 'F'}
-                    </div>
-                    <div className="text-white/80 text-lg capitalize">
-                      {weather.description}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Current Weather Card */}
+              <Card className="backdrop-blur-md bg-white/10 border-white/20 shadow-2xl animate-fade-in">
+                <CardContent className="p-6 space-y-6">
+                  {/* Location */}
+                  <div className="text-center">
+                    <div className="flex items-center justify-center space-x-2 text-white">
+                      <MapPin className="h-5 w-5" />
+                      <span className="text-xl font-semibold">
+                        {weather.name}, {weather.country}
+                      </span>
                     </div>
                   </div>
-                </div>
 
-                {/* Weather Details */}
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="text-center space-y-2">
-                    <Droplets className="h-6 w-6 text-blue-300 mx-auto" />
-                    <div className="text-white/60 text-sm">Humidity</div>
-                    <div className="text-white font-semibold">{weather.humidity}%</div>
+                  {/* Temperature and Icon */}
+                  <div className="text-center space-y-4">
+                    <WeatherIcon weatherCode={weather.weatherCode} size={80} />
+                    <div className="space-y-2">
+                      <div className="text-5xl font-bold text-white animate-scale-in">
+                        {convertTemperature(weather.temperature)}°{isCelsius ? 'C' : 'F'}
+                      </div>
+                      <div className="text-white/80 text-lg capitalize">
+                        {weather.description}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-center space-y-2">
-                    <Wind className="h-6 w-6 text-gray-300 mx-auto" />
-                    <div className="text-white/60 text-sm">Wind</div>
-                    <div className="text-white font-semibold">{weather.windSpeed} km/h</div>
+
+                  {/* Weather Details */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="text-center space-y-2">
+                      <Droplets className="h-6 w-6 text-blue-300 mx-auto" />
+                      <div className="text-white/60 text-sm">Humidity</div>
+                      <div className="text-white font-semibold">{weather.humidity}%</div>
+                    </div>
+                    <div className="text-center space-y-2">
+                      <Wind className="h-6 w-6 text-gray-300 mx-auto" />
+                      <div className="text-white/60 text-sm">Wind</div>
+                      <div className="text-white font-semibold">{weather.windSpeed} km/h</div>
+                    </div>
+                    <div className="text-center space-y-2">
+                      <Gauge className="h-6 w-6 text-yellow-300 mx-auto" />
+                      <div className="text-white/60 text-sm">Pressure</div>
+                      <div className="text-white font-semibold">{weather.pressure} hPa</div>
+                    </div>
                   </div>
-                  <div className="text-center space-y-2">
-                    <Gauge className="h-6 w-6 text-yellow-300 mx-auto" />
-                    <div className="text-white/60 text-sm">Pressure</div>
-                    <div className="text-white font-semibold">{weather.pressure} hPa</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+
+              {/* Temperature Trend Chart */}
+              <TemperatureTrendChart cityName={weather.name} isCelsius={isCelsius} />
+            </div>
           )}
 
           {/* Demo Cities */}
