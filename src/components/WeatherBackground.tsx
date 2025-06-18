@@ -140,8 +140,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherCode, isNi
         </div>
       )}
 
-      {/* CSS Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes rainDrop {
           0% { transform: translateY(-100vh) rotate(10deg); }
           100% { transform: translateY(100vh) rotate(10deg); }

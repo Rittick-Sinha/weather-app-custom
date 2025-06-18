@@ -84,8 +84,7 @@ const WeatherIcon: React.FC<WeatherIconProps> = ({ weatherCode, size = 48, isNig
     <div className="inline-block transform hover:scale-110 transition-transform duration-300">
       {getIcon()}
       
-      {/* CSS Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes sunSpin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
