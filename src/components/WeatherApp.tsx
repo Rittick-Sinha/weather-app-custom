@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, MapPin, Droplets, Wind, Gauge } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import WeatherIcon from './WeatherIcon';
 import WeatherBackground from './WeatherBackground';
-import TemperatureTrendChart from './TemperatureTrendChart';
+import CurrentForecast from './CurrentForecast';
 import GoogleMap from './GoogleMap';
 
 interface WeatherData {
@@ -247,8 +246,8 @@ const WeatherApp = () => {
                 </CardContent>
               </Card>
 
-              {/* Temperature Trend Chart */}
-              <TemperatureTrendChart cityName={weather.name} isCelsius={isCelsius} />
+              {/* Current Forecast */}
+              <CurrentForecast isCelsius={isCelsius} />
 
               {/* Google Map */}
               <Card className="backdrop-blur-md bg-white/10 border-white/20 shadow-2xl animate-fade-in">
